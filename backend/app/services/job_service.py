@@ -17,6 +17,9 @@ SCRAPE_STATE_FILE = settings.data_path / "scrape_state" / "last_run.json"
 
 
 def scrape_jobs(
+    """
+    Scrapes LinkedIn jobs based on the provided search criteria.
+    """
     deadline: str,
     location: str,
     role: str | None = None,
