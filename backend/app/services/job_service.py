@@ -52,7 +52,10 @@ def scrape_jobs(
     return {"new_count": added, "duplicate_count": duplicates, "total_count": total}
 
 
-def continue_scrape(new_limit: int) -> dict:
+def continue_scrape(
+    """
+    Continues a previous scrape session using stored state.
+    """
     state = _load_scrape_state()
     if not state:
         raise FileNotFoundError("No previous scrape found. Run jobfind first.")
