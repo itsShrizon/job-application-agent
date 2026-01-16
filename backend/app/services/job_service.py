@@ -96,6 +96,9 @@ def deadline_review(
 
 
 def get_jobs(
+    """
+    Retrieves and filters jobs from the local database.
+    """
     status: str | None = None,
     min_score: float | None = None,
     sort: str = "relevance_score",
