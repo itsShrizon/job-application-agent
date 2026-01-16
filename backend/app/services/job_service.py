@@ -85,7 +85,10 @@ def continue_scrape(
     return {"new_count": added, "duplicate_count": duplicates, "total_count": total}
 
 
-def deadline_review() -> dict:
+def deadline_review(
+    """
+    Reviews and marks jobs as expired based on the current date.
+    """
     today = date.today().isoformat()
     expired_total, active_count = mark_expired_jobs(today)
     logger.info(f"Deadline review: active={active_count}")
