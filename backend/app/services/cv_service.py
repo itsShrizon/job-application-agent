@@ -1,4 +1,5 @@
 import logging
+from typing import Any, Dict
 
 from app.core.csv_manager import get_job_by_id, update_job
 from app.core.parser import read_personal_md, read_github_md, read_job_circular
