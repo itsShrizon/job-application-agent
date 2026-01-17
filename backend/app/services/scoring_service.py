@@ -7,7 +7,7 @@ from app.core.llm_chains import invoke_scoring_chain
 
 logger = logging.getLogger(__name__)
 
-BATCH_SIZE = 10
+BATCH_SIZE = 10  # Optimal size for context window processing
 
 
 def score_all_unscored(
