@@ -1,4 +1,5 @@
 import logging
+from typing import List, Dict, Any
 
 from app.core.csv_manager import get_unscored_jobs, get_scored_jobs, update_job
 from app.core.parser import read_personal_md
