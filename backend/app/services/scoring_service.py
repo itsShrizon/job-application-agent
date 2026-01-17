@@ -10,7 +10,10 @@ logger = logging.getLogger(__name__)
 BATCH_SIZE = 10
 
 
-def score_all_unscored() -> dict:
+def score_all_unscored(
+    """
+    Scores all jobs that haven't been processed yet by the LLM.
+    """
     profile = read_personal_md()
     candidate_summary = _build_candidate_summary(profile)
 
