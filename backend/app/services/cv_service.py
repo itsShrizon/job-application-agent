@@ -9,7 +9,10 @@ from app.core.template_engine import fill_cv_template, compile_latex
 logger = logging.getLogger(__name__)
 
 
-def generate_cv(job_id: str, template: str) -> dict:
+def generate_cv(
+    """
+    Orchestrates the full CV generation pipeline for a specific job.
+    """
     job = get_job_by_id(job_id)
     profile = read_personal_md()
     github = read_github_md()
