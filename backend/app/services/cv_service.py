@@ -8,6 +8,9 @@ from app.core.template_engine import fill_cv_template, compile_latex
 
 logger = logging.getLogger(__name__)
 
+# Template resolution defaults
+DEFAULT_TEMPLATE_COLOR = '#000000'
+
 
 def generate_cv(
     """
