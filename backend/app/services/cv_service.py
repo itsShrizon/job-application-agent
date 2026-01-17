@@ -108,7 +108,10 @@ def generate_cv_from_file(file_path: str, template: str) -> dict:
     }
 
 
-def _format_profile(profile: dict) -> str:
+def _format_profile(
+    """
+    Internal helper to transform profile data into LLM-ready text.
+    """
     parts = []
     for key in ["name", "email", "phone", "linkedin", "github", "location", "portfolio"]:
         if profile.get(key):
