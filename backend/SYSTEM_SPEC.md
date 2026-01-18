@@ -1541,3 +1541,5 @@ Pydantic validates all API requests before they reach the service layer. Service
 | **Pydantic** | Python library for data validation using type annotations. Used for API schemas and settings. |
 | **Service Layer** | Pure Python functions containing all business logic. Shared by CLI and API. |
 | **YAGNI** | You Aren't Gonna Need It. |
+
+<!-- Arch Revision 1 -->
