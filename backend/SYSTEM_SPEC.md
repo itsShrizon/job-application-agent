@@ -1591,3 +1591,5 @@ Pydantic validates all API requests before they reach the service layer. Service
 <!-- Arch Revision 24 -->
 
 <!-- Arch Revision 25 -->
+
+<!-- Arch Revision 26 -->
