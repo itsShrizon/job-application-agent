@@ -8,3 +8,6 @@ Details for rule 2.
 
 ## Guideline 3
 Details for rule 3.
+
+## Guideline 4
+Details for rule 4.
