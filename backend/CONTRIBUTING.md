@@ -5,3 +5,6 @@ Details for rule 1.
 
 ## Guideline 2
 Details for rule 2.
+
+## Guideline 3
+Details for rule 3.
