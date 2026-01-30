@@ -20,3 +20,6 @@ Details for rule 6.
 
 ## Guideline 7
 Details for rule 7.
+
+## Guideline 8
+Details for rule 8.
