@@ -17,3 +17,6 @@ Details for rule 5.
 
 ## Guideline 6
 Details for rule 6.
+
+## Guideline 7
+Details for rule 7.
