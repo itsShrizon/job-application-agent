@@ -14,3 +14,6 @@ Details for rule 4.
 
 ## Guideline 5
 Details for rule 5.
+
+## Guideline 6
+Details for rule 6.
