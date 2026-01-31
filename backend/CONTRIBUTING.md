@@ -29,3 +29,6 @@ Details for rule 9.
 
 ## Guideline 10
 Details for rule 10.
+
+## Guideline 11
+Details for rule 11.
