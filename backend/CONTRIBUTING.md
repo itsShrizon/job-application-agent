@@ -32,3 +32,6 @@ Details for rule 10.
 
 ## Guideline 11
 Details for rule 11.
+
+## Guideline 12
+Details for rule 12.
