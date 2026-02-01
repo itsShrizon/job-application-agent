@@ -38,3 +38,6 @@ Details for rule 12.
 
 ## Guideline 13
 Details for rule 13.
+
+## Guideline 14
+Details for rule 14.
