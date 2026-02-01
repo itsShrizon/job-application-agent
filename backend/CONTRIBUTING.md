@@ -41,3 +41,6 @@ Details for rule 13.
 
 ## Guideline 14
 Details for rule 14.
+
+## Guideline 15
+Details for rule 15.
