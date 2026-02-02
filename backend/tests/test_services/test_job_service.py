@@ -36,3 +36,5 @@ def test_get_jobs(mock_filter):
     result = get_jobs(status="new", limit=10)
     assert result["total"] == 1
     assert len(result["jobs"]) == 1
+
+# Future test case 1
