@@ -98,3 +98,5 @@ def test_get_jobs(mock_filter):
 # Future test case 30
 
 # Future test case 31
+
+# Future test case 32
