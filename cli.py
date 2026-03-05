@@ -21,16 +21,28 @@ def setup_logging():
 def handle_jobfind(args):
     from app.services import job_service
 
-    if args.subcommand == "continue":
-        result = job_service.continue_scrape(args.new_limit)
+    # Route special sub-commands
+    if args.deadline == "continue":
+        # python cli.py jobfind continue prev <new_limit>
+        # positionals: deadline=continue, location=prev, role=<new_limit>
+        try:
+            new_limit = int(args.role or args.limit)
+        except (TypeError, ValueError):
+            new_limit = int(args.limit) if args.limit else 1000
+        result = job_service.continue_scrape(new_limit)
         print(f"Continue scrape complete: {result['new_count']} new, "
               f"{result['duplicate_count']} duplicates, {result['total_count']} total")
         return
 
-    if args.subcommand == "deadline_review":
+    if args.deadline == "deadline_review":
         result = job_service.deadline_review()
         print(f"Deadline review: {result['expired_count']} expired, {result['active_count']} active")
         return
+
+    if args.deadline not in ("24h", "7d", "30d", "anytime"):
+        print(f"ERROR: invalid deadline '{args.deadline}'. Choose from: 24h, 7d, 30d, anytime",
+              file=sys.stderr)
+        sys.exit(1)
 
     result = job_service.scrape_jobs(
         deadline=args.deadline,
@@ -94,21 +106,17 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="cli.py", description="Job Agent CLI")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    # jobfind
+    # jobfind — flat positional args (avoid subparser conflict with '24h')
+    # Usage:
+    #   python cli.py jobfind <deadline> <location> [role] [work_type] [limit]
+    #   python cli.py jobfind continue prev <new_limit>
+    #   python cli.py jobfind deadline_review
     jf = subparsers.add_parser("jobfind", help="Scrape LinkedIn jobs")
-    jf_sub = jf.add_subparsers(dest="subcommand")
-
-    jf_continue = jf_sub.add_parser("continue", help="Continue previous scrape")
-    jf_continue.add_argument("prev", help="Literal 'prev'")
-    jf_continue.add_argument("new_limit", type=int, help="New limit")
-
-    jf_sub.add_parser("deadline_review", help="Mark expired jobs")
-
-    jf.add_argument("deadline", nargs="?", choices=["24h", "7d", "30d", "anytime"])
-    jf.add_argument("location", nargs="?")
-    jf.add_argument("role", nargs="?", default=None)
-    jf.add_argument("work_type", nargs="?", default=None, choices=["onsite", "hybrid", "remote"])
-    jf.add_argument("limit", nargs="?", type=int, default=500)
+    jf.add_argument("deadline", help="24h | 7d | 30d | anytime | continue | deadline_review")
+    jf.add_argument("location", nargs="?", default=None, help="Location filter (e.g. Bangladesh)")
+    jf.add_argument("role", nargs="?", default=None, help="Job title / keyword (optional)")
+    jf.add_argument("work_type", nargs="?", default=None, help="onsite | hybrid | remote (optional)")
+    jf.add_argument("limit", nargs="?", type=int, default=500, help="Max jobs to scrape")
 
     # jobsort
     subparsers.add_parser("jobsort", help="Score jobs by relevance")
