@@ -31,7 +31,7 @@
 - **URL:** https://github.com/itsShrizon/Multi-Level-Decision-Making-Agent
 
 ## Automatic-Lead-Enrichment-Workflow
-- **Description:** A production-ready n8n workflow that enriches Google Sheets with missing company and contact information using various data extraction tools.
+- **Description:** Automates the enrichment of Google Sheets with missing company and contact information using various data extraction and verification tools.
 - **Language:** N/A
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/Automatic-Lead-Enrichment-Workflow
@@ -85,7 +85,7 @@
 - **URL:** https://github.com/itsShrizon/Fitness-App-
 
 ## itsShrizon
-- **Description:** This project showcases the portfolio and skills of an AI engineer specializing in NLP and automation.
+- **Description:** This project showcases the portfolio and expertise of an AI Engineer specializing in NLP and automation.
 - **Language:** N/A
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/itsShrizon
@@ -115,7 +115,7 @@
 - **URL:** https://github.com/itsShrizon/Event-Search-Agent
 
 ## Partnership_OCR
-- **Description:** Partnership_OCR processes PDF files to extract and structure text, images, and metadata for dataset creation.
+- **Description:** Partnership_OCR processes PDF files to extract text, images, and metadata, creating a structured dataset for analysis.
 - **Language:** Python
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/Partnership_OCR
@@ -127,13 +127,13 @@
 - **URL:** https://github.com/itsShrizon/BanglaRAG
 
 ## portfolio-website
-- **Description:** A responsive portfolio website showcasing an AI researcher's expertise in AI/ML, NLP, and full-stack development.
+- **Description:** A modern portfolio website showcasing an AI researcher's expertise in AI/ML, NLP, and full-stack development.
 - **Language:** HTML
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/portfolio-website
 
 ## GenzMarketing
-- **Description:** GenzMarketing creates avatar videos from text and implements chatbot workflows for enhanced marketing interactions.
+- **Description:** GenzMarketing creates avatar videos from text and implements a chatbot workflow for marketing purposes.
 - **Language:** Python
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/GenzMarketing
@@ -145,13 +145,13 @@
 - **URL:** https://github.com/itsShrizon/Arxiv-research-assistant
 
 ## Game-Recommendation-Engine
-- **Description:** The Game Recommendation Engine uses NLP to provide personalized Steam game suggestions based on user preferences and reviews.
+- **Description:** The Game Recommendation Engine uses NLP to provide personalized Steam game suggestions based on user preferences and game descriptions.
 - **Language:** Jupyter Notebook
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/Game-Recommendation-Engine
 
 ## PWA-AI-Assistant
-- **Description:** A Progressive Web App (PWA) that integrates an AI assistant using a Python backend and a Node.js frontend.
+- **Description:** A Progressive Web App (PWA) that integrates AI functionalities with a Python backend and a Node.js frontend.
 - **Language:** JavaScript
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/PWA-AI-Assistant
@@ -169,19 +169,19 @@
 - **URL:** https://github.com/itsShrizon/Amazon-Sales-Revenue-Dashboard
 
 ## Medical-Question-Answering-Generative-Language-Models
-- **Description:** This project develops a Retrieval Augmented Generation model to enhance medical question answering using advanced retrieval techniques and language models.
+- **Description:** This project develops a Retrieval Augmented Generation model to enhance medical question answering using advanced language models and retrieval techniques.
 - **Language:** Jupyter Notebook
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/Medical-Question-Answering-Generative-Language-Models
 
 ## sarcasm_detection
-- **Description:** This project implements a deep learning model to detect sarcasm in headlines using natural language processing techniques.
+- **Description:** This project implements a deep learning model for detecting sarcasm in headlines using natural language processing techniques.
 - **Language:** Jupyter Notebook
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/sarcasm_detection
 
 ## Multimedia-Content-Summarizer
-- **Description:** The Multimedia-Content-Summarizer generates concise summaries from video content using audio-to-text alignment and advanced NLP techniques.
+- **Description:** A tool that generates concise summaries from multimedia content using audio-to-text alignment and advanced NLP techniques.
 - **Language:** N/A
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/Multimedia-Content-Summarizer
@@ -199,19 +199,19 @@
 - **URL:** https://github.com/itsShrizon/RealEstate-Valuation-Engine
 
 ## HR-Dashboard-Power-BI
-- **Description:** This project provides a Power BI dashboard for visualizing HR metrics like new hires, separations, and bad hires.
+- **Description:** This project implements an HR dashboard using Power BI to visualize employee data, including new hires, separations, and bad hires.
 - **Language:** N/A
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/HR-Dashboard-Power-BI
 
 ## Profit-Pulse---Real-Time-Sales-Revenue-Tracker
-- **Description:** Profit Pulse is a Power BI dashboard for real-time tracking and analysis of sales revenue, profits, and product performance.
+- **Description:** Profit Pulse is a Power BI dashboard for real-time tracking and analysis of sales revenue and performance metrics.
 - **Language:** N/A
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/Profit-Pulse---Real-Time-Sales-Revenue-Tracker
 
 ## FootballOracle
-- **Description:** FootballOracle predicts football match outcomes using machine learning techniques on historical data for accurate forecasting.
+- **Description:** FootballOracle predicts football match outcomes using machine learning techniques on historical data for accurate predictions.
 - **Language:** Jupyter Notebook
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/FootballOracle
@@ -223,7 +223,7 @@
 - **URL:** https://github.com/itsShrizon/Sentiment-Detection
 
 ## BrauSocialHub
-- **Description:** BrauSocialHub is a platform for social networking and collaboration among users in the brewing community.
+- **Description:** BrauSocialHub is a platform for social networking and collaboration among brewing enthusiasts and professionals.
 - **Language:** JavaScript
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/BrauSocialHub
@@ -247,13 +247,13 @@
 - **URL:** https://github.com/itsShrizon/Plant-Disease-Detection
 
 ## cse438
-- **Description:** CSE438 is a project designed for collaborative learning and development in computer science education.
+- **Description:** CSE438 is a project repository for a course focused on computer science concepts and applications.
 - **Language:** N/A
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/cse438
 
 ## CSE442
-- **Description:** CSE442 is a project repository for a computer science course focused on collaborative software development and coding practices.
+- **Description:** CSE442 is a project repository for a course focused on software engineering principles and practices.
 - **Language:** N/A
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/CSE442

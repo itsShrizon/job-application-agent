@@ -19,6 +19,7 @@ Rules:
 - NEVER fabricate experience, skills, or achievements
 - Quantify achievements where possible
 - Keep content concise and impactful
+- Select AT MOST 4 projects for the [PROJECTS] section — pick the ones most relevant to the target role, ranked by relevance
 
 Output format — return EXACTLY these sections with these headers:
 
