@@ -1,42 +1,72 @@
-\documentclass[11pt,a4paper]{article}
-\usepackage[margin=0.7in]{geometry}
+\documentclass[a4paper, 10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{multicol}
 \usepackage{enumitem}
-\usepackage{titlesec}
 \usepackage{hyperref}
-\usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{needspace}
 
+% Colors for headings and text
+\definecolor{headingcolor}{RGB}{0, 51, 102}
+\definecolor{accentcolor}{RGB}{0, 102, 204}
+
+% Title formatting
+\titleformat{\section}{\color{headingcolor}\Large\bfseries}{}{0em}{}[\color{accentcolor}\titlerule]
+
+% Set column separation
+\setlength{\columnsep}{0.9cm}
+
+% Document begins
 \pagestyle{empty}
-\setlength{\parindent}{0pt}
-\titleformat{\section}{\large\bfseries\uppercase}{}{0em}{}[\titlerule]
-\titlespacing*{\section}{0pt}{10pt}{6pt}
-\setlist[itemize]{nosep, leftmargin=*, topsep=2pt}
-
 \begin{document}
 
 % Header
 \begin{center}
-    {\LARGE\bfseries {{NAME}}} \\[4pt]
-    {{LOCATION}} \\[2pt]
-    {{EMAIL}} \quad $\vert$ \quad {{PHONE}} \\[2pt]
-    \href{{{LINKEDIN}}}{LinkedIn} \quad $\vert$ \quad \href{{{GITHUB}}}{GitHub} \quad $\vert$ \quad \href{{{PORTFOLIO}}}{Portfolio}
+    {\Huge \textbf{\color{headingcolor}{{NAME}}}} \\
+    \vspace{0.1cm}
+    {{SUMMARY}} \\
+    \href{mailto:{{EMAIL}}}{\color{accentcolor}{{EMAIL}}} | 
+    \href{tel:{{PHONE}}}{\color{accentcolor}{{PHONE}}} |
+    {{LOCATION}} \\
+    \href{{{PORTFOLIO}}}{\color{accentcolor}{{PORTFOLIO}}} |
+    \href{{{GITHUB}}}{\color{accentcolor}GitHub} |
+    \href{{{LINKEDIN}}}{\color{accentcolor}LinkedIn}
 \end{center}
 
-\section{Summary}
-{{SUMMARY}}
+\vspace{0.3cm}
+\hrule
+\vspace{-0.4cm}
 
-\section{Skills}
-{{SKILLS}}
+% \titlespacing{<command>}{<left>}{<before-sep>}{<after-sep>}
+\titlespacing{\section}{0pt}{10 pt}{9pt}
+% Begin two columns
+\begin{multicols}{2}
 
-\section{Experience}
-{{EXPERIENCE}}
-
-\section{Projects}
-{{PROJECTS}}
-
-\section{Education}
+% Education Section
+\section*{Education}
 {{EDUCATION}}
 
-\section{Certifications}
+% Skills Section
+\section*{Skills}
+{{SKILLS}}
+
+% Projects Section
+\section*{Projects}
+{{PROJECTS}}
+
+\columnbreak
+
+% Experience Section
+\section*{Experience}
+{{EXPERIENCE}}
+
+% Certifications Section
+\section*{Certifications}
 {{CERTIFICATIONS}}
+
+\end{multicols}
 
 \end{document}
