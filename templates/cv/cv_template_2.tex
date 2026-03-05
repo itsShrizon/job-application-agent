@@ -1,0 +1,42 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=0.7in]{geometry}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{multicol}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\titlerule]
+\titlespacing*{\section}{0pt}{10pt}{6pt}
+\setlist[itemize]{nosep, leftmargin=*, topsep=2pt}
+
+\begin{document}
+
+% Header
+\begin{center}
+    {\LARGE\bfseries {{NAME}}} \\[4pt]
+    {{EMAIL}} \quad $\vert$ \quad {{PHONE}} \quad $\vert$ \quad {{LOCATION}} \\[2pt]
+    \href{{{LINKEDIN}}}{LinkedIn} \quad $\vert$ \quad \href{{{GITHUB}}}{GitHub} \quad $\vert$ \quad \href{{{PORTFOLIO}}}{Portfolio}
+\end{center}
+
+\section{Professional Summary}
+{{SUMMARY}}
+
+\section{Technical Skills}
+{{SKILLS}}
+
+\section{Projects}
+{{PROJECTS}}
+
+\section{Professional Experience}
+{{EXPERIENCE}}
+
+\section{Education}
+{{EDUCATION}}
+
+\section{Certifications}
+{{CERTIFICATIONS}}
+
+\end{document}

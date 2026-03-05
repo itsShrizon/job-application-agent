@@ -1,0 +1,11 @@
+.env
+data/jobs.csv
+data/scrape_state/
+output/
+logs/
+__pycache__/
+*.aux
+*.log
+*.out
+*.pyc
+.pytest_cache/
