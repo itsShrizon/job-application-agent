@@ -1,3 +1,5 @@
+import sys
+import io
 import logging
 from logging.handlers import RotatingFileHandler
 
@@ -16,12 +18,16 @@ def setup_logging():
     formatter = logging.Formatter("[%(asctime)s] [%(levelname)s] [%(name)s] %(message)s")
 
     file_handler = RotatingFileHandler(
-        log_dir / "agent.log", maxBytes=5 * 1024 * 1024, backupCount=3
+        log_dir / "agent.log", maxBytes=5 * 1024 * 1024, backupCount=3, encoding="utf-8"
     )
     file_handler.setLevel(logging.DEBUG)
     file_handler.setFormatter(formatter)
 
-    console_handler = logging.StreamHandler()
+    stdout_stream = sys.stdout
+    if getattr(stdout_stream, "encoding", "").lower() != "utf-8" and hasattr(stdout_stream, "buffer"):
+        stdout_stream = io.TextIOWrapper(stdout_stream.buffer, encoding="utf-8", errors="replace", line_buffering=True)
+
+    console_handler = logging.StreamHandler(stdout_stream)
     console_handler.setLevel(logging.INFO)
     console_handler.setFormatter(formatter)
 
