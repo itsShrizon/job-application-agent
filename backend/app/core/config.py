@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     GITHUB_PAT_TOKEN: str = ""
     OPENAI_API_KEY: str = ""
     APIFY_API_TOKEN: str = ""
+    DATABASE_URL: str = ""
 
     HOST: str = "127.0.0.1"
     PORT: int = 8000

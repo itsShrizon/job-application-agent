@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
+from app.core.db import init_db
 from app.api.routes import jobs, cv, cover, github, profile, tasks
 
 
@@ -41,12 +42,17 @@ def create_app() -> FastAPI:
 
     application.add_middleware(
         CORSMiddleware,
-        allow_origins=["http://localhost:*", "http://127.0.0.1:*"],
+        allow_origins=[],
         allow_origin_regex=r"http://(localhost|127\.0\.0\.1)(:\d+)?",
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+    try:
+        init_db()
+    except Exception as e:
+        logging.getLogger(__name__).error(f"DB init failed: {e}")
 
     application.include_router(jobs.router)
     application.include_router(cv.router)

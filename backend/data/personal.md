@@ -49,7 +49,6 @@ AI Engineer specializing in machine learning, NLP, and intelligent automation, w
 **BRAC University**, Dhaka, Bangladesh
 B.Sc. in Computer Science — 2020 – 2024
 CGPA: 3.40 / 4.00
-Achievements: Dean's List (2020), Academic Merit Scholarship (2021)
 Supervisor: Dr. Farig Yousuf Sadeque, Associate Professor, Dept. of CSE
 
 **M.E.H Arif College**, Gazipur, Bangladesh
@@ -60,11 +59,14 @@ GPA: 4.58 / 5.00
 Secondary School Certificate (SSC) — 2014 – 2016
 GPA: 5.00 / 5.00
 
+## Achievements
+
+- Dean's List Award, BRAC University (2020)
+- Academic Merit Scholarship, BRAC University (2021)
+
 ## Certifications
 
 - Machine Learning with Tree-Based Models in Python, DataCamp (2024)
 - Data Visualization in Tableau, DataCamp (2024)
 - Cluster Analysis in Python, DataCamp (2024)
 - Cleaning Data in Python, DataCamp (2024)
-- Dean's List Award, BRAC University (2020)
-- Academic Merit Scholarship, BRAC University (2021)

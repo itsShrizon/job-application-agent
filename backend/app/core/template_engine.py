@@ -1,12 +1,29 @@
 import re
+import shutil
 import subprocess
 import logging
+import platform
 from pathlib import Path
 from datetime import date
 
 from app.core.config import settings
 
 logger = logging.getLogger(__name__)
+
+# Resolve pdflatex binary — try PATH first, then common MiKTeX install on Windows
+def _find_pdflatex() -> str:
+    if shutil.which("pdflatex"):
+        return "pdflatex"
+    if platform.system() == "Windows":
+        candidate = Path(r"C:\Users\Codixel_\AppData\Local\Programs\MiKTeX\miktex\bin\x64\pdflatex.exe")
+        if candidate.exists():
+            return str(candidate)
+    raise FileNotFoundError(
+        "pdflatex not found. Install MiKTeX from https://miktex.org/download "
+        "or add it to your PATH."
+    )
+
+PDFLATEX = _find_pdflatex()
 
 TEMPLATE_MAP = {
     "t1": "cv_template_1.tex",
@@ -31,13 +48,45 @@ LATEX_SPECIAL = {
 def escape_latex(text: str) -> str:
     if not text:
         return ""
-    result = text
-    result = result.replace("\\", LATEX_SPECIAL["\\"])
+
+    # 1. Temporarily replace valid LaTeX commands we want to KEEP with a safe placeholder
+    # By placing inner elements (\href) before outer wrappers (\textbf), we support nesting.
+    safe_patterns = [
+        r"\\\\",                                                # Line breaks
+        r"\\href{[^}]+}{[^}]+}",                                # Links (most nested)
+        r"\\textbf{[^}]+}",                                     # Bolds (can contain protected blocks)
+        r"\\textit{[^}]+}",                                     # Italics
+        r"\\begin{[^}]+}(?:\[[^\]]+\])?",                       # Begin blocks with optional args
+        r"\\end{[^}]+}",                                        # End blocks
+        r"\\item\s?",                                           # Items
+        r"\\vspace{[^}]+}",                                     # Spacing
+        r"\\hfill",                                             # Fill
+    ]
+
+    protected_blocks = []
+    
+    def shield_match(match):
+        idx = len(protected_blocks)
+        protected_blocks.append(match.group(0))
+        return f"LATEXSAFEBLOCK{idx}"
+
+    protected_text = text
+    for pattern in safe_patterns:
+        protected_text = re.sub(pattern, shield_match, protected_text)
+
+    # 2. Escape the remaining plain text normally
+    escaped = protected_text
+    escaped = escaped.replace("\\", LATEX_SPECIAL["\\"])
     for char, replacement in LATEX_SPECIAL.items():
         if char == "\\":
             continue
-        result = result.replace(char, replacement)
-    return result
+        escaped = escaped.replace(char, replacement)
+
+    # 3. Restore the protected blocks inside-out (backwards)
+    for idx, block in reversed(list(enumerate(protected_blocks))):
+        escaped = escaped.replace(f"LATEXSAFEBLOCK{idx}", block)
+
+    return escaped
 
 
 def fill_cv_template(template: str, identity: dict, content: dict, job_context: dict) -> Path:
@@ -64,6 +113,7 @@ def fill_cv_template(template: str, identity: dict, content: dict, job_context: 
         "{{EXPERIENCE}}": escape_latex(content.get("experience", "")),
         "{{PROJECTS}}": escape_latex(content.get("projects", "")),
         "{{EDUCATION}}": escape_latex(content.get("education", "")),
+        "{{ACHIEVEMENTS}}": escape_latex(content.get("achievements", "")),
         "{{CERTIFICATIONS}}": escape_latex(content.get("certifications", "")),
         "{{TARGET_ROLE}}": escape_latex(job_context.get("target_role", "")),
         "{{COMPANY_NAME}}": escape_latex(job_context.get("company_name", "")),
@@ -81,6 +131,11 @@ def fill_cv_template(template: str, identity: dict, content: dict, job_context: 
     role = _sanitize_filename(job_context.get("target_role", "Role"))
     today = date.today().strftime("%Y_%m_%d")
     filename = f"{company}_{role}_{today}"
+
+    # Downgrade em/en dashes before stripping non-ASCII characters
+    tex = tex.replace("—", "-").replace("–", "-")
+    import unicodedata
+    tex = unicodedata.normalize('NFKD', tex).encode('ascii', 'ignore').decode('ascii')
 
     output_dir = settings.output_path / "cv"
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -142,10 +197,10 @@ def compile_latex(tex_path: Path) -> Path:
 
     for pass_num in range(2):
         result = subprocess.run(
-            ["pdflatex", "-interaction=nonstopmode", "-output-directory", str(output_dir), str(tex_path)],
+            [PDFLATEX, "-interaction=nonstopmode", "-output-directory", str(output_dir), str(tex_path)],
             capture_output=True,
             text=True,
-            timeout=30,
+            timeout=120,
         )
         if result.returncode != 0 and pass_num == 1:
             logger.error(f"LaTeX compilation failed:\n{result.stdout}\n{result.stderr}")

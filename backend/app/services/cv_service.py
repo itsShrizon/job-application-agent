@@ -113,6 +113,8 @@ def _format_profile(profile: dict) -> str:
         parts.append(f"\nExperience:\n{profile['experience']}")
     if profile.get("education"):
         parts.append(f"\nEducation:\n{profile['education']}")
+    if profile.get("achievements"):
+        parts.append(f"\nAchievements:\n{profile['achievements']}")
     if profile.get("certifications"):
         parts.append(f"\nCertifications:\n{profile['certifications']}")
     return "\n".join(parts)

@@ -1,5 +1,6 @@
 import base64
 import logging
+import re
 
 import requests
 from langchain_openai import ChatOpenAI
@@ -35,6 +36,7 @@ def refresh_github() -> dict:
     for repo in repos:
         if repo.get("fork"):
             continue
+        repo["commits"] = _fetch_commit_count(repo["name"], headers)
         if not repo.get("description"):
             desc = _generate_description(repo, headers)
             if desc:
@@ -56,6 +58,24 @@ def refresh_github() -> dict:
         "ai_enriched": enriched,
         "file_path": str(output_path),
     }
+
+
+def _fetch_commit_count(repo_name: str, headers: dict) -> int:
+    url = f"https://api.github.com/repos/{settings.GITHUB_USERNAME}/{repo_name}/commits?per_page=1"
+    try:
+        r = requests.get(url, headers=headers, timeout=15)
+        if r.status_code != 200:
+            return 0
+        if "last" in r.links:
+            last_url = r.links["last"]["url"]
+            match = re.search(r"&page=(\d+)", last_url)
+            if match:
+                return int(match.group(1))
+        commits = r.json()
+        return len(commits)
+    except Exception as e:
+        logger.debug(f"[gitref] Commit fetch failed for {repo_name}: {e}")
+        return 0
 
 
 # ── AI enrichment ──────────────────────────────────────────────────────────────
@@ -190,12 +210,16 @@ def _format_repos_md(repos: list[dict]) -> str:
         lang = repo.get("language", "") or "N/A"
         url = repo.get("html_url", "")
         stars = repo.get("stargazers_count", 0)
+        size = repo.get("size", 0)
+        commits = repo.get("commits", 0)
         topics = ", ".join(repo.get("topics", []))
 
         lines.append(f"## {name}")
         lines.append(f"- **Description:** {desc}")
         lines.append(f"- **Language:** {lang}")
         lines.append(f"- **Stars:** {stars}")
+        lines.append(f"- **Size:** {size} KB")
+        lines.append(f"- **Commits:** {commits}")
         if topics:
             lines.append(f"- **Topics:** {topics}")
         lines.append(f"- **URL:** {url}")

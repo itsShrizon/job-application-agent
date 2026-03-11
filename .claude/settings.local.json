@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(python:*)",
-      "Bash(pip install:*)"
+      "Bash(pip install:*)",
+      "Bash(cd \"D:\\\\Tanzir\\\\CV Generator\" && wc -l templates/cv/cv_template_*.tex)"
     ]
   }
 }

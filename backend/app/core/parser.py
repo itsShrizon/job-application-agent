@@ -29,6 +29,7 @@ def parse_personal_md(content: str) -> dict:
     profile["education"] = sections.get("education", "").strip()
     profile["certifications"] = sections.get("certifications", "").strip()
     profile["summary"] = sections.get("summary", "").strip()
+    profile["achievements"] = sections.get("achievements", "").strip()
 
     return profile
 

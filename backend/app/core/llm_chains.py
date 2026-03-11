@@ -9,46 +9,64 @@ from app.core.config import settings
 
 logger = logging.getLogger(__name__)
 
-CV_SYSTEM_PROMPT = """You are an expert ATS resume optimizer. Given a candidate's profile, GitHub projects, and a target job description, generate tailored CV content.
+CV_SYSTEM_PROMPT = r"""You are an expert ATS resume optimizer. Given a candidate's profile, GitHub projects, and a target job description, generate tailored CV content.
 
 Rules:
-- Prioritize keywords from the job description
-- Rewrite bullet points to be relevant to the target role
-- Select the most relevant projects from GitHub
-- Use strong action verbs (designed, implemented, optimized, deployed, etc.)
-- NEVER fabricate experience, skills, or achievements
-- Quantify achievements where possible
-- Keep content concise and impactful
-- Select AT MOST 4 projects for the [PROJECTS] section — pick the ones most relevant to the target role, ranked by relevance
+- Prioritize keywords from the job description (e.g., "Machine Learning", "Python", "Cloud Run", "REST API").
+- Rewrite bullet points to be highly technical and relevant to the target role.
+- When choosing projects, select them based on: 1. Technology stack match with the target job (MOST IMPORTANT). 2. High number of commits. 3. Large codebase size (KB).
+- Use strong action verbs (Architected, Engineered, Optimized, Deployed).
+- Quantify achievements with metrics (e.g., "increased accuracy by 10%", "reduced latency by 200ms").
+- Select the optimal number of projects to dynamically fill exactly one page (filling it to the brim without overflowing). Consider the length of the previous sections.
+- CRITICAL: AVOID using special LaTeX characters like ^, ~, $, or % in plain text. Use plain text like "SIU S12" or "10 percent".
+- REWRITE project names to be highly technical and academic. Avoid generic terms.
+  * Good: "Hierarchical Transformer-Based Semantic Segmentation for Medical Imagery"
+  * Bad: "Medical QA Pipeline" or "Dips Framework"
+- For [PROJECTS], provide 2-3 detailed bullet points per project. Mention specific frameworks and the technical challenge solved.
+- YOU MUST populate [ACHIEVEMENTS] using the candidate's actual achievements (e.g., Dean's List, Scholarships) found in the profile.
 
-Output format — return EXACTLY these sections with these headers:
+Output format — return EXACTLY these sections with these headers. YOU MUST USE VALID LATEX FORMATTING:
 
 [SUMMARY]
-A 2-3 sentence professional summary tailored to the role.
+A 2-3 sentence technical professional summary (plain text).
 
 [SKILLS]
-Comma-separated list of relevant skills, prioritizing those mentioned in the job description.
+\begin{{itemize}}
+    \item \textbf{{Frameworks & Languages:}} Python, PyTorch, TensorFlow, GCP, SQL, etc.
+    \item \textbf{{Specializations:}} LLM Fine-tuning, RAG, NLP, CV, etc.
+\end{{itemize}}
 
 [EXPERIENCE]
-Each experience entry as:
-TITLE | COMPANY | DATES
-- Bullet point 1
-- Bullet point 2
-- Bullet point 3
+For each role:
+\begin{{itemize}}
+    \item \textbf{{COMPANY_NAME}} \hfill DATES \\
+    \textbf{{JOB_TITLE}} \\
+    - Developed technical solution X using Y resulting in Z. \\
+    - Optimized performance by A percent via B implementation.
+\end{{itemize}}
 
 [PROJECTS]
-Each project entry as:
-PROJECT_NAME | TECHNOLOGIES
-- Description bullet 1
-- Description bullet 2
+Select the optimal number of projects to fill the single page perfectly. Format EXACTLY like this:
+\begin{{itemize}}
+    \item \textbf{{\href{{URL_IF_AVAILABLE}}{{TECHNICAL_ACADEMIC_PROJECT_NAME}}}} \\
+    - Built a technical solution for X using Y (e.g., PyTorch, FastAPI). \\
+    - Achieved performance metric Z through algorithmic optimization W.
+\end{{itemize}}
 
 [EDUCATION]
-Each entry as:
-DEGREE | INSTITUTION | DATES
-- Detail (if any)
+For each entry:
+\textbf{{INSTITUTION}} \hfill DATES \\
+\textit{{DEGREE}} \hfill \textbf{{Details (e.g., CGPA 3.80 / 4.00)}} \\
+
+[ACHIEVEMENTS]
+\begin{{itemize}}
+    \item \textbf{{ACHIEVEMENT_NAME}}, \textit{{ISSUER}} \hfill DATE
+\end{{itemize}}
 
 [CERTIFICATIONS]
-Each as: CERTIFICATION_NAME | ISSUER | DATE"""
+\begin{{itemize}}
+    \item \textbf{{CERTIFICATION_NAME}}, \textit{{ISSUER}} \hfill DATE
+\end{{itemize}}"""
 
 CV_USER_PROMPT = """Candidate Profile:
 {profile}
@@ -221,6 +239,7 @@ def _parse_cv_sections(raw: str) -> dict:
         "experience": sections.get("experience", ""),
         "projects": sections.get("projects", ""),
         "education": sections.get("education", ""),
+        "achievements": sections.get("achievements", ""),
         "certifications": sections.get("certifications", ""),
     }
 
@@ -248,6 +267,32 @@ def _parse_cover_sections(raw: str) -> dict:
         "body": sections.get("body", ""),
         "closing": sections.get("closing", "Sincerely,"),
     }
+
+
+CV_EDIT_SYSTEM_PROMPT = r"""You are a LaTeX CV editor. The user will give you instructions to modify their CV.
+
+Rules:
+- Return ONLY the complete modified LaTeX source code, nothing else
+- Do NOT wrap in markdown fences or add any explanation
+- Preserve all LaTeX formatting, packages, and document structure
+- Keep the CV fitting on exactly 1 page
+- AVOID using special LaTeX characters like ^, ~, $, or % in plain text unless they are escaped"""
+
+CV_EDIT_USER_PROMPT = """Current CV LaTeX:
+{latex}
+
+Instruction: {instruction}
+
+Return the complete modified LaTeX source."""
+
+
+def invoke_cv_edit_chain(latex: str, instruction: str) -> str:
+    prompt = ChatPromptTemplate.from_messages([
+        ("system", CV_EDIT_SYSTEM_PROMPT),
+        ("human", CV_EDIT_USER_PROMPT),
+    ])
+    chain = prompt | _cv_llm() | StrOutputParser()
+    return chain.invoke({"latex": latex, "instruction": instruction})
 
 
 def _parse_scoring_response(raw: str) -> list[dict]:

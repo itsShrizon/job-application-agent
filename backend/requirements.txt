@@ -11,6 +11,7 @@ openai>=1.12.0
 
 # Data Management
 pandas>=2.2.0
+psycopg2-binary>=2.9.0
 
 # Scraping
 apify-client>=1.6.0

@@ -1,9 +1,10 @@
 # GitHub Projects
 
 ## Oral-Cancer
-- **Description:** This project analyzes image datasets for potential data leakage in oral cancer classification.
-- **Language:** Jupyter Notebook
+- **Description:** Multi-task PyTorch deep learning pipeline for oral pathology classification. Features a custom CNN architecture leveraging Vision Transformers/ResNet to simultaneously predict binary lesions (benign vs malignant) and fine-grained subtypes. Includes rigorous stratified resampling to prevent data leakage, learning rate scheduling & early stopping.
+- **Language:** Python
 - **Stars:** 0
+- **Topics:** cnn, computer-vision, data-engineering, deep-learning, image-classification, machine-learning, multi-task-learning, pytorch, resnet, timm, vision-transformers
 - **URL:** https://github.com/itsShrizon/Oral-Cancer
 
 ## Problem-Solving
@@ -18,12 +19,6 @@
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/Content-Classifier
 
-## Dips
-- **Description:** Dips is a chatbot framework that utilizes LangChain and OpenAI for customer support interactions based on FAQ contexts.
-- **Language:** Python
-- **Stars:** 0
-- **URL:** https://github.com/itsShrizon/Dips
-
 ## Multi-Level-Decision-Making-Agent
 - **Description:** Multi-Level Decision-Making Agent is a hierarchical AI framework combining symbolic reasoning, hierarchical reinforcement learning, and goal decomposition. Designed for scalable, interpretable multi-agent and robotic systems, it enables real-time decision hierarchies, policy refinement, modular tooling, examples, tests, and extensible demos. v1.0.0
 - **Language:** Python
@@ -31,7 +26,7 @@
 - **URL:** https://github.com/itsShrizon/Multi-Level-Decision-Making-Agent
 
 ## Automatic-Lead-Enrichment-Workflow
-- **Description:** Automates the enrichment of Google Sheets with missing company and contact information using various data extraction and verification tools.
+- **Description:** A production-ready n8n workflow that enriches Google Sheets with missing company and contact information using various data sources.
 - **Language:** N/A
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/Automatic-Lead-Enrichment-Workflow
@@ -73,7 +68,7 @@
 - **URL:** https://github.com/itsShrizon/kyc-verification-service
 
 ## Apply-Job-Agent
-- **Description:** Apply Job Agent is an AI-powered platform that streamlines job applications by matching users with jobs and customizing resumes.
+- **Description:** Apply Job Agent is an AI-powered platform that streamlines job applications by matching jobs and customizing resumes.
 - **Language:** JavaScript
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/Apply-Job-Agent
@@ -85,7 +80,7 @@
 - **URL:** https://github.com/itsShrizon/Fitness-App-
 
 ## itsShrizon
-- **Description:** This project showcases the portfolio and expertise of an AI Engineer specializing in NLP and automation.
+- **Description:** This project showcases the portfolio and skills of an AI Engineer specializing in NLP and automation.
 - **Language:** N/A
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/itsShrizon
@@ -115,7 +110,7 @@
 - **URL:** https://github.com/itsShrizon/Event-Search-Agent
 
 ## Partnership_OCR
-- **Description:** Partnership_OCR processes PDF files to extract text, images, and metadata, creating a structured dataset for analysis.
+- **Description:** Partnership_OCR processes PDF files to extract structured datasets, including text, images, and metadata for further analysis.
 - **Language:** Python
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/Partnership_OCR
@@ -127,25 +122,25 @@
 - **URL:** https://github.com/itsShrizon/BanglaRAG
 
 ## portfolio-website
-- **Description:** A modern portfolio website showcasing an AI researcher's expertise in AI/ML, NLP, and full-stack development.
+- **Description:** A responsive portfolio website showcasing an AI researcher's expertise in machine learning, NLP, and full-stack development.
 - **Language:** HTML
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/portfolio-website
 
 ## GenzMarketing
-- **Description:** GenzMarketing creates avatar videos from text and implements a chatbot workflow for marketing purposes.
+- **Description:** GenzMarketing creates avatar videos from text and implements a chatbot using vectorized data and retrieval systems.
 - **Language:** Python
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/GenzMarketing
 
 ## Arxiv-research-assistant
-- **Description:** A platform for exploring and analyzing arXiv research papers with a modern web interface and LLM-powered insights.
+- **Description:** A platform for exploring and analyzing arXiv research papers with a modern web interface and LLM-powered features.
 - **Language:** Python
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/Arxiv-research-assistant
 
 ## Game-Recommendation-Engine
-- **Description:** The Game Recommendation Engine uses NLP to provide personalized Steam game suggestions based on user preferences and game descriptions.
+- **Description:** The Game Recommendation Engine uses NLP to provide personalized game suggestions based on Steam game descriptions and user reviews.
 - **Language:** Jupyter Notebook
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/Game-Recommendation-Engine
@@ -169,19 +164,19 @@
 - **URL:** https://github.com/itsShrizon/Amazon-Sales-Revenue-Dashboard
 
 ## Medical-Question-Answering-Generative-Language-Models
-- **Description:** This project develops a Retrieval Augmented Generation model to enhance medical question answering using advanced language models and retrieval techniques.
+- **Description:** This project develops a Retrieval Augmented Generation model to enhance medical question answering using advanced retrieval techniques and language models.
 - **Language:** Jupyter Notebook
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/Medical-Question-Answering-Generative-Language-Models
 
 ## sarcasm_detection
-- **Description:** This project implements a deep learning model for detecting sarcasm in headlines using natural language processing techniques.
+- **Description:** This project implements a deep learning model for detecting sarcasm in headlines using NLP techniques.
 - **Language:** Jupyter Notebook
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/sarcasm_detection
 
 ## Multimedia-Content-Summarizer
-- **Description:** A tool that generates concise summaries from multimedia content using audio-to-text alignment and advanced NLP techniques.
+- **Description:** This project provides a cascaded architecture for extractive summarization of multimedia content using audio-to-text alignment techniques.
 - **Language:** N/A
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/Multimedia-Content-Summarizer
@@ -193,19 +188,19 @@
 - **URL:** https://github.com/itsShrizon/Transformer-Based-Neural-Network-approach-for-Question-Answer-Problem
 
 ## RealEstate-Valuation-Engine
-- **Description:** The Real Estate Valuation Engine predicts binary price movements in the UAE real estate market using a Bidirectional LSTM deep learning model.
+- **Description:** The Real Estate Valuation Engine predicts binary price movements in the UAE real estate market using a Bidirectional LSTM model.
 - **Language:** Jupyter Notebook
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/RealEstate-Valuation-Engine
 
 ## HR-Dashboard-Power-BI
-- **Description:** This project implements an HR dashboard using Power BI to visualize employee data, including new hires, separations, and bad hires.
+- **Description:** This project implements an HR dashboard in Power BI to visualize employee data, including new hires, separations, and bad hires.
 - **Language:** N/A
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/HR-Dashboard-Power-BI
 
 ## Profit-Pulse---Real-Time-Sales-Revenue-Tracker
-- **Description:** Profit Pulse is a Power BI dashboard for real-time tracking and analysis of sales revenue and performance metrics.
+- **Description:** Profit Pulse is a Power BI dashboard for real-time tracking and analysis of sales revenue, profits, and product performance.
 - **Language:** N/A
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/Profit-Pulse---Real-Time-Sales-Revenue-Tracker
@@ -223,7 +218,7 @@
 - **URL:** https://github.com/itsShrizon/Sentiment-Detection
 
 ## BrauSocialHub
-- **Description:** BrauSocialHub is a platform for social networking and collaboration among brewing enthusiasts and professionals.
+- **Description:** BrauSocialHub is a platform for social networking and collaboration among users interested in brewing and beer culture.
 - **Language:** JavaScript
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/BrauSocialHub
@@ -253,7 +248,7 @@
 - **URL:** https://github.com/itsShrizon/cse438
 
 ## CSE442
-- **Description:** CSE442 is a project repository for a course focused on software engineering principles and practices.
+- **Description:** CSE442 is a project repository for a computer science course focused on collaborative software development and engineering practices.
 - **Language:** N/A
 - **Stars:** 0
 - **URL:** https://github.com/itsShrizon/CSE442

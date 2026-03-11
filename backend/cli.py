@@ -79,11 +79,12 @@ def handle_mkcv(args):
     job_ref = args.job_ref
     template = args.template
 
-    if job_ref.startswith("jobid-"):
+    # Accept bare IDs (4CD6CA), prefixed IDs (jobid-4CD6CA), or .md files
+    if job_ref.endswith(".md"):
+        result = cv_service.generate_cv_from_file(file_path=job_ref, template=template)
+    else:
         job_id = job_ref.replace("jobid-", "")
         result = cv_service.generate_cv(job_id=job_id, template=template)
-    else:
-        result = cv_service.generate_cv_from_file(file_path=job_ref, template=template)
 
     print(f"CV generated: {result['pdf_path']}")
 
@@ -93,11 +94,12 @@ def handle_mkcover(args):
 
     job_ref = args.job_ref
 
-    if job_ref.startswith("jobid-"):
+    # Accept bare IDs (4CD6CA), prefixed IDs (jobid-4CD6CA), or .md files
+    if job_ref.endswith(".md"):
+        result = cover_service.generate_cover_from_file(file_path=job_ref)
+    else:
         job_id = job_ref.replace("jobid-", "")
         result = cover_service.generate_cover(job_id=job_id)
-    else:
-        result = cover_service.generate_cover_from_file(file_path=job_ref)
 
     print(f"Cover letter generated: {result['pdf_path']}")
 

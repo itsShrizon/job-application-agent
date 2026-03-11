@@ -5,8 +5,10 @@ from datetime import datetime, date
 from app.core.config import settings
 from app.core.apify_client import scrape_linkedin_jobs
 from app.core.csv_manager import (
-    append_jobs, load_jobs, save_jobs, get_job_by_id, filter_jobs,
+    append_jobs, get_job_by_id, filter_jobs,
+    mark_expired_jobs,
 )
+from app.core.db import fetchone
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +31,8 @@ def scrape_jobs(
     )
 
     added, duplicates = append_jobs(raw_jobs)
-    total = len(load_jobs())
+    total_row = fetchone("SELECT COUNT(*) as cnt FROM jobs")
+    total = total_row["cnt"] if total_row else 0
 
     _save_scrape_state({
         "deadline": deadline,
@@ -64,7 +67,8 @@ def continue_scrape(new_limit: int) -> dict:
     )
 
     added, duplicates = append_jobs(raw_jobs)
-    total = len(load_jobs())
+    total_row = fetchone("SELECT COUNT(*) as cnt FROM jobs")
+    total = total_row["cnt"] if total_row else 0
 
     state["limit"] = new_limit
     state["results_fetched"] = state.get("results_fetched", 0) + len(raw_jobs)
@@ -75,20 +79,10 @@ def continue_scrape(new_limit: int) -> dict:
 
 
 def deadline_review() -> dict:
-    df = load_jobs()
-    if df.empty:
-        return {"expired_count": 0, "active_count": 0}
-
     today = date.today().isoformat()
-    expired_mask = (df["deadline"] != "") & (df["deadline"] < today) & (df["status"] != "expired")
-    expired_count = expired_mask.sum()
-
-    df.loc[expired_mask, "status"] = "expired"
-    save_jobs(df)
-
-    active_count = len(df[df["status"] != "expired"])
-    logger.info(f"Deadline review: {expired_count} expired, {active_count} active")
-    return {"expired_count": int(expired_count), "active_count": int(active_count)}
+    expired_total, active_count = mark_expired_jobs(today)
+    logger.info(f"Deadline review: active={active_count}")
+    return {"expired_count": expired_total, "active_count": active_count}
 
 
 def get_jobs(

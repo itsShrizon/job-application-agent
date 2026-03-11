@@ -1,6 +1,6 @@
 import logging
 
-from app.core.csv_manager import get_unscored_jobs, load_jobs, save_jobs, get_scored_jobs
+from app.core.csv_manager import get_unscored_jobs, get_scored_jobs, update_job
 from app.core.parser import read_personal_md
 from app.core.llm_chains import invoke_scoring_chain
 
@@ -14,14 +14,13 @@ def score_all_unscored() -> dict:
     candidate_summary = _build_candidate_summary(profile)
 
     unscored = get_unscored_jobs()
-    if unscored.empty:
+    if not unscored:
         return {"scored_count": 0, "top_5": []}
 
-    df = load_jobs()
     scored_count = 0
 
     for i in range(0, len(unscored), BATCH_SIZE):
-        batch = unscored.iloc[i : i + BATCH_SIZE]
+        batch = unscored[i : i + BATCH_SIZE]
         jobs_text = _format_jobs_batch(batch)
 
         try:
@@ -34,32 +33,27 @@ def score_all_unscored() -> dict:
             idx = result.get("job_index")
             if idx is None or idx >= len(batch):
                 continue
-
-            job_id = batch.iloc[idx]["job_id"]
-            mask = df["job_id"] == job_id
-            df.loc[mask, "relevance_score"] = str(result.get("score", 0))
-            df.loc[mask, "score_reason"] = str(result.get("reason", ""))
-            df.loc[mask, "status"] = "scored"
+            job_id = batch[idx]["job_id"]
+            update_job(job_id, {
+                "relevance_score": result.get("score", 0),
+                "score_reason": str(result.get("reason", "")),
+                "status": "scored",
+            })
             scored_count += 1
 
-    save_jobs(df)
-
-    top_5 = get_scored_jobs(limit=5).to_dict("records")
+    top_5 = get_scored_jobs(limit=5)
     logger.info(f"Scored {scored_count} jobs")
     return {"scored_count": scored_count, "top_5": top_5}
 
 
 def rescore_all() -> dict:
-    df = load_jobs()
-    df["relevance_score"] = ""
-    df["score_reason"] = ""
-    df.loc[df["status"] == "scored", "status"] = "new"
-    save_jobs(df)
+    from app.core.db import execute
+    execute("UPDATE jobs SET relevance_score = NULL, score_reason = '', status = 'new' WHERE status = 'scored'")
     return score_all_unscored()
 
 
 def get_top_jobs(limit: int = 10) -> list[dict]:
-    return get_scored_jobs(limit=limit).to_dict("records")
+    return get_scored_jobs(limit=limit)
 
 
 def _build_candidate_summary(profile: dict) -> str:
@@ -75,9 +69,9 @@ def _build_candidate_summary(profile: dict) -> str:
     return "\n".join(parts)
 
 
-def _format_jobs_batch(batch) -> str:
+def _format_jobs_batch(batch: list[dict]) -> str:
     lines = []
-    for idx, (_, row) in enumerate(batch.iterrows()):
+    for idx, row in enumerate(batch):
         desc = (row.get("description_text", "") or "")[:800]
         if not desc.strip():
             continue

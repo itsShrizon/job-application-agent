@@ -1,0 +1,71 @@
+\documentclass[a4paper, 10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.50in]{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{titlesec}
+\usepackage{parskip}
+
+% Colors
+\definecolor{headingcolor}{RGB}{0, 76, 153}
+\definecolor{accentcolor}{RGB}{0, 102, 204}
+
+% Setup links
+\hypersetup{
+    colorlinks=true,
+    urlcolor=accentcolor,
+    linkcolor=accentcolor
+}
+
+% Title formatting
+\titleformat{\section}{\color{headingcolor}\Large\bfseries}{}{0em}{}[\color{headingcolor}\titlerule]
+\titlespacing{\section}{0pt}{4pt}{4pt}
+
+% Custom list environment for tight spacing
+\setlist[itemize]{leftmargin=*, noitemsep, topsep=0pt, parsep=0pt, partopsep=0pt}
+\setlist[enumerate]{leftmargin=*, noitemsep, topsep=0pt, parsep=0pt, partopsep=0pt}
+
+% Document begins
+\pagestyle{empty}
+\begin{document}
+
+% Header
+\begin{center}
+    {\Huge \textbf{\color{headingcolor}{{NAME}}}} \\
+    \vspace{0.1cm}
+    {\small {{TARGET_ROLE}} \textemdash{} Computer Science Graduate} \\
+    \vspace{0.1cm}
+    {\small \href{mailto:{{EMAIL}}}{\color{accentcolor}{{EMAIL}}} \textemdash{} \href{tel:{{PHONE}}}{\color{accentcolor}{{PHONE}}} \textemdash{} {{LOCATION}}} \\
+    {\small \href{{{PORTFOLIO}}}{\color{accentcolor}{{PORTFOLIO}}} \textemdash{} \href{{{GITHUB}}}{\color{accentcolor}GitHub} \textemdash{} \href{{{LINKEDIN}}}{\color{accentcolor}LinkedIn}}
+\end{center}
+
+\vspace{-0.2cm}
+\section*{Overview}
+{{SUMMARY}}
+
+\vspace{0.2cm}
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+\section*{Education}
+{{EDUCATION}}
+
+\section*{Skills}
+{{SKILLS}}
+
+\section*{Experience}
+{{EXPERIENCE}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\section*{Projects}
+{{PROJECTS}}
+
+\section*{Achievements}
+{{ACHIEVEMENTS}}
+
+\section*{Certifications}
+{{CERTIFICATIONS}}
+\end{minipage}
+
+\end{document}
