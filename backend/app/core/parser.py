@@ -11,6 +11,54 @@ def read_personal_md() -> dict:
     return parse_personal_md(path.read_text(encoding="utf-8"))
 
 
+def write_personal_md(profile: dict) -> None:
+    path = settings.data_path / "personal.md"
+    content = _generate_personal_md(profile)
+    path.write_text(content, encoding="utf-8")
+
+
+def _generate_personal_md(p: dict) -> str:
+    lines = [
+        f"# {p.get('name', 'User')} — Personal Profile",
+        "",
+        "## Personal Information",
+        "",
+        f"Name: {p.get('name', '')}",
+        f"Email: {p.get('email', '')}",
+        f"Phone: {p.get('phone', '')}",
+        f"LinkedIn: {p.get('linkedin', '')}",
+        f"GitHub: {p.get('github', '')}",
+        f"Location: {p.get('location', '')}",
+        f"Portfolio: {p.get('portfolio', '')}",
+        "",
+        "## Summary",
+        "",
+        p.get("summary", ""),
+        "",
+        "## Skills",
+        "",
+        p.get("skills", ""),
+        "",
+        "## Experience",
+        "",
+        p.get("experience", ""),
+        "",
+        "## Education",
+        "",
+        p.get("education", ""),
+        "",
+        "## Achievements",
+        "",
+        p.get("achievements", ""),
+        "",
+        "## Certifications",
+        "",
+        p.get("certifications", ""),
+        ""
+    ]
+    return "\n".join(lines)
+
+
 def parse_personal_md(content: str) -> dict:
     sections = _split_sections(content)
     profile = {}
