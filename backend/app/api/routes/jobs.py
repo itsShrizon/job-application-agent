@@ -93,6 +93,20 @@ def api_get_job(job_id: str):
     return _to_job_response(job)
 
 
+@router.delete("/{job_id}")
+def api_delete_job(job_id: str):
+    success = job_service.delete_job(job_id)
+    if not success:
+        raise HTTPException(status_code=404, detail="Job not found")
+    return {"message": "Job deleted"}
+
+
+@router.delete("")
+def api_delete_all_jobs():
+    count = job_service.delete_all_jobs()
+    return {"message": f"Deleted {count} jobs"}
+
+
 @router.get("", response_model=JobListResponse)
 def api_list_jobs(
     status: str | None = Query(default=None),
@@ -117,10 +131,13 @@ def api_list_jobs(
 
 
 def _to_job_response(job: dict) -> dict:
-    score = job.get("relevance_score", "")
-    try:
-        score = float(score) if score else None
-    except (ValueError, TypeError):
+    score = job.get("relevance_score")
+    if score is not None and score != "":
+        try:
+            score = float(score)
+        except (ValueError, TypeError):
+            score = None
+    else:
         score = None
 
     cv_gen = str(job.get("cv_generated", "False")).lower() == "true"

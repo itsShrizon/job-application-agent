@@ -110,6 +110,16 @@ def get_job(job_id: str) -> dict:
     return get_job_by_id(job_id)
 
 
+def delete_job(job_id: str) -> bool:
+    from app.core.csv_manager import delete_job_by_id
+    return delete_job_by_id(job_id)
+
+
+def delete_all_jobs() -> int:
+    from app.core.csv_manager import delete_all_jobs as db_delete_all
+    return db_delete_all()
+
+
 def _save_scrape_state(state: dict) -> None:
     SCRAPE_STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
     SCRAPE_STATE_FILE.write_text(json.dumps(state, indent=2), encoding="utf-8")

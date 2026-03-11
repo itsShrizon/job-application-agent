@@ -55,8 +55,14 @@ def append_jobs(new_rows: list[dict]) -> tuple[int, int]:
         # Handle boolean and numeric fields
         insert_data["cv_generated"] = bool(insert_data.get("cv_generated", False))
         insert_data["cover_generated"] = bool(insert_data.get("cover_generated", False))
-        score = insert_data.get("relevance_score", "")
-        insert_data["relevance_score"] = float(score) if score and score != "" else None
+        score = insert_data.get("relevance_score")
+        if score is not None and score != "":
+            try:
+                insert_data["relevance_score"] = float(score)
+            except (ValueError, TypeError):
+                insert_data["relevance_score"] = None
+        else:
+            insert_data["relevance_score"] = None
 
         col_names = list(insert_data.keys())
         placeholders = ", ".join(["%s"] * len(col_names))
@@ -79,6 +85,25 @@ def get_job_by_id(job_id: str) -> dict:
     if not row:
         raise KeyError(f"Job ID '{job_id}' not found.")
     return row
+
+
+def delete_job_by_id(job_id: str) -> bool:
+    count_row = fetchone("SELECT COUNT(*) as cnt FROM jobs WHERE job_id = %s", (job_id,))
+    if not count_row or count_row["cnt"] == 0:
+        return False
+    execute("DELETE FROM jobs WHERE job_id = %s", (job_id,))
+    return True
+
+
+def delete_all_jobs() -> int:
+    try:
+        count_row = fetchone("SELECT COUNT(*) as cnt FROM jobs")
+        total = count_row["cnt"] if count_row else 0
+        execute("DELETE FROM jobs")
+        return total
+    except Exception as e:
+        logger.error(f"Failed to delete all jobs: {e}")
+        return 0
 
 
 def update_job(job_id: str, updates: dict) -> None:

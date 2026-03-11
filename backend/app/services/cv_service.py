@@ -34,6 +34,7 @@ def generate_cv(job_id: str, template: str) -> dict:
     }
 
     job_context = {
+        "job_id": job_id,
         "target_role": job.get("title", ""),
         "company_name": job.get("company_name", ""),
         "company_website": job.get("company_website", ""),
@@ -84,6 +85,7 @@ def generate_cv_from_file(file_path: str, template: str) -> dict:
     }
 
     job_context = {
+        "job_id": file_path,
         "target_role": job_title,
         "company_name": company_name,
         "company_website": "",

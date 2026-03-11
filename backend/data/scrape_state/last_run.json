@@ -1,9 +1,9 @@
 {
-  "deadline": "7d",
-  "location": "Bangladesh",
+  "deadline": "anytime",
+  "location": "Dhaka",
   "role": "AI Engineer",
-  "work_type": "500",
+  "work_type": null,
   "limit": 500,
-  "results_fetched": 9,
-  "timestamp": "2026-03-05T15:33:11.705573"
+  "results_fetched": 12,
+  "timestamp": "2026-03-11T15:43:58.956510"
 }

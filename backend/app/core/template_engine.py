@@ -130,7 +130,12 @@ def fill_cv_template(template: str, identity: dict, content: dict, job_context: 
     company = _sanitize_filename(job_context.get("company_name", "Unknown"))
     role = _sanitize_filename(job_context.get("target_role", "Role"))
     today = date.today().strftime("%Y_%m_%d")
-    filename = f"{company}_{role}_{today}"
+    job_id = _sanitize_filename(job_context.get("job_id", ""))
+    
+    if job_id:
+        filename = f"{company}_{role}_{job_id}_{today}"
+    else:
+        filename = f"{company}_{role}_{today}"
 
     # Downgrade em/en dashes before stripping non-ASCII characters
     tex = tex.replace("—", "-").replace("–", "-")
@@ -180,7 +185,12 @@ def fill_cover_template(identity: dict, content: dict, job_context: dict) -> Pat
     company = _sanitize_filename(job_context.get("company_name", "Unknown"))
     role = _sanitize_filename(job_context.get("target_role", "Role"))
     today = date.today().strftime("%Y_%m_%d")
-    filename = f"{company}_{role}_{today}"
+    job_id = _sanitize_filename(job_context.get("job_id", ""))
+
+    if job_id:
+        filename = f"{company}_{role}_{job_id}_{today}"
+    else:
+        filename = f"{company}_{role}_{today}"
 
     output_dir = settings.output_path / "cover"
     output_dir.mkdir(parents=True, exist_ok=True)

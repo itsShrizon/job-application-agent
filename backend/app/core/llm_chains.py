@@ -18,7 +18,7 @@ Rules:
 - Use strong action verbs (Architected, Engineered, Optimized, Deployed).
 - Quantify achievements with metrics (e.g., "increased accuracy by 10%", "reduced latency by 200ms").
 - Select the optimal number of projects to dynamically fill exactly one page (filling it to the brim without overflowing). Consider the length of the previous sections.
-- CRITICAL: AVOID using special LaTeX characters like ^, ~, $, or % in plain text. Use plain text like "SIU S12" or "10 percent".
+- CRITICAL: AVOID using special LaTeX characters like ^, ~, $, or % in plain text. Use plain text like "SIU S12" or "10 percent". Replace explicit "&" with "and" or escape as "\&".
 - REWRITE project names to be highly technical and academic. Avoid generic terms.
   * Good: "Hierarchical Transformer-Based Semantic Segmentation for Medical Imagery"
   * Bad: "Medical QA Pipeline" or "Dips Framework"
@@ -32,7 +32,7 @@ A 2-3 sentence technical professional summary (plain text).
 
 [SKILLS]
 \begin{{itemize}}
-    \item \textbf{{Frameworks & Languages:}} Python, PyTorch, TensorFlow, GCP, SQL, etc.
+    \item \textbf{{Frameworks \& Languages:}} Python, PyTorch, TensorFlow, GCP, SQL, etc.
     \item \textbf{{Specializations:}} LLM Fine-tuning, RAG, NLP, CV, etc.
 \end{{itemize}}
 
@@ -115,18 +115,20 @@ Description:
 
 Generate a tailored cover letter."""
 
-SCORING_SYSTEM_PROMPT = """You are a job relevance scoring system. Score each job for the candidate on a scale of 0.0 to 100.0.
+SCORING_SYSTEM_PROMPT = """You are a highly analytical, strict job relevance scoring engine. Your task is to mathematically score each job for the candidate on a strict scale of 0.0 to 100.0.
 
-Scoring criteria:
-- Skills match (40%): How well do the candidate's skills match the job requirements?
-- Experience level (25%): Does the candidate's experience level align?
-- Domain fit (15%): Is the candidate's domain/industry experience relevant?
-- Location (10%): Does the location match the candidate's preference?
-- Role alignment (10%): How closely does the job title match what the candidate is looking for?
+CRITICAL RULES:
+1. MAX SCORE is 100.0. MIN SCORE is 0.0. Do NOT exceed 100 under ANY circumstances (e.g., no 500 or 1500).
+2. Do NOT append a '%' sign to the score. Output ONLY a pure float number (e.g., 85.5, 42.0).
+3. BE RUTHLESS AND DETERMINISTIC. Start at 100 and strictly DEDUCT points:
+   - Skills match (Max 40 pts): Deduct 5-10 pts for every missing core skill or unaligned tech stack.
+   - Experience level (Max 25 pts): Deduct 15-25 pts if candidate is Junior but job is Senior/Lead, or vice versa.
+   - Domain fit (Max 15 pts): Deduct 5-15 pts if the industry completely shifts (e.g., Healthcare to Crypto).
+   - Location (Max 10 pts): Deduct 10 pts if timezone or physical location differs severely from candidate preference.
+   - Role alignment (Max 10 pts): Deduct 5-10 pts if the job title does not immediately reflect the candidate's career goals.
+4. UNIQUENESS IS MANDATORY. You MUST differentiate the scores across the batch based on nuanced deductions. Do NOT assign the exact same score (like 100.0 or 0.0) to multiple jobs unless they are absolute clones. If a job is an 80 and one is slightly better, give the other an 82.5.
 
-For each job, return a JSON object with: job_index (0-based), score (0.0-100.0), reason (1 sentence).
-
-Return a JSON array of these objects. ONLY return valid JSON, no other text."""
+Output format MUST be a pure JSON array of objects with keys: `job_index` (integer, 0-based), `score` (float between 0.0 and 100.0), and `reason` (1 sentence explaining specific deductions). ONLY return valid JSON."""
 
 SCORING_USER_PROMPT = """Candidate Summary:
 {candidate_summary}
@@ -299,13 +301,32 @@ def _parse_scoring_response(raw: str) -> list[dict]:
     cleaned = raw.strip()
     if cleaned.startswith("```"):
         lines = cleaned.split("\n")
-        lines = [l for l in lines if not l.strip().startswith("```")]
+        lines = [l for l in lines if not l.strip().startswith("```") and not l.strip().startswith("json")]
         cleaned = "\n".join(lines)
 
     try:
         results = json.loads(cleaned)
         if isinstance(results, list):
-            return results
+            valid_results = []
+            for item in results:
+                if not isinstance(item, dict):
+                    continue
+                score_raw = item.get("score", 0.0)
+                try:
+                    score_str = str(score_raw).replace("%", "").strip()
+                    score_val = float(score_str)
+                    
+                    if score_val > 100.0:
+                        score_val = 100.0
+                    elif score_val < 0.0:
+                        score_val = 0.0
+                        
+                    item["score"] = score_val
+                    valid_results.append(item)
+                except (ValueError, TypeError):
+                    item["score"] = 0.0
+                    valid_results.append(item)
+            return valid_results
     except json.JSONDecodeError:
         logger.warning(f"Failed to parse scoring response: {cleaned[:200]}")
 
