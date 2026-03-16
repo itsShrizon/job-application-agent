@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 BATCH_SIZE = 10  # Optimal size for context window processing
 
 
-def score_all_unscored(
+def score_all_unscored() -> Dict[str, Any]:
     """
     Scores all jobs that haven't been processed yet by the LLM.
     """

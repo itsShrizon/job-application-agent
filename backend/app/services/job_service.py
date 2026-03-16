@@ -17,15 +17,15 @@ SCRAPE_STATE_FILE = settings.data_path / "scrape_state" / "last_run.json"
 
 
 def scrape_jobs(
-    """
-    Scrapes LinkedIn jobs based on the provided search criteria.
-    """
     deadline: str,
     location: str,
     role: str | None = None,
     work_type: str | None = None,
     limit: int = 500,
 ) -> dict:
+    """
+    Scrapes LinkedIn jobs based on the provided search criteria.
+    """
     raw_jobs = scrape_linkedin_jobs(
         deadline=deadline,
         location=location,
@@ -52,7 +52,7 @@ def scrape_jobs(
     return {"new_count": added, "duplicate_count": duplicates, "total_count": total}
 
 
-def continue_scrape(
+def continue_scrape(new_limit: int) -> dict:
     """
     Continues a previous scrape session using stored state.
     """
@@ -85,7 +85,7 @@ def continue_scrape(
     return {"new_count": added, "duplicate_count": duplicates, "total_count": total}
 
 
-def deadline_review(
+def deadline_review() -> dict:
     """
     Reviews and marks jobs as expired based on the current date.
     """
@@ -96,9 +96,6 @@ def deadline_review(
 
 
 def get_jobs(
-    """
-    Retrieves and filters jobs from the local database.
-    """
     status: str | None = None,
     min_score: float | None = None,
     sort: str = "relevance_score",
@@ -107,6 +104,9 @@ def get_jobs(
     offset: int = 0,
     search: str | None = None,
 ) -> dict:
+    """
+    Retrieves and filters jobs from the local database.
+    """
     total, jobs = filter_jobs(
         status=status,
         min_score=min_score,
