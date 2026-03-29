@@ -3,7 +3,11 @@
     "allow": [
       "Bash(python:*)",
       "Bash(pip install:*)",
-      "Bash(cd \"D:\\\\Tanzir\\\\CV Generator\" && wc -l templates/cv/cv_template_*.tex)"
+      "Bash(cd \"D:\\\\Tanzir\\\\CV Generator\" && wc -l templates/cv/cv_template_*.tex)",
+      "Bash(curl:*)",
+      "Bash(netstat -ano)",
+      "Bash(findstr \"LISTENING\")",
+      "Bash(findstr \":300[0-9]\")"
     ]
   }
 }

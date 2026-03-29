@@ -47,6 +47,14 @@ def _generate_personal_md(p: dict) -> str:
         "",
         p.get("education", ""),
         "",
+        "## Google Scholar",
+        "",
+        p.get("google_scholar", ""),
+        "",
+        "## Research Projects",
+        "",
+        p.get("research_projects", ""),
+        "",
         "## Achievements",
         "",
         p.get("achievements", ""),
@@ -72,6 +80,8 @@ def parse_personal_md(content: str) -> dict:
     profile["location"] = _extract_field(personal, "location")
     profile["portfolio"] = _extract_field(personal, "portfolio")
 
+    profile["google_scholar"] = sections.get("google scholar", "").strip()
+    profile["research_projects"] = sections.get("research projects", "").strip()
     profile["skills"] = sections.get("skills", "").strip()
     profile["experience"] = sections.get("experience", "").strip()
     profile["education"] = sections.get("education", "").strip()

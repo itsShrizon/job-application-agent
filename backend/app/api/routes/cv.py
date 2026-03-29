@@ -4,7 +4,7 @@ from fastapi import APIRouter, HTTPException
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
-from app.schemas.cv import CVGenerateRequest, CVGenerateResponse
+from app.schemas.cv import CVGenerateRequest, CustomCVGenerateRequest, CVGenerateResponse
 from app.services import cv_service
 
 router = APIRouter(prefix="/api/cv", tags=["CV"])
@@ -28,6 +28,23 @@ def api_generate_cv(req: CVGenerateRequest):
             "error_code": "FILE_NOT_FOUND",
             "message": str(e),
         })
+    except (ValueError, RuntimeError) as e:
+        raise HTTPException(status_code=500, detail={
+            "error_code": "GENERATION_FAILED",
+            "message": str(e),
+        })
+    return CVGenerateResponse(**result)
+
+
+@router.post("/generate-custom", response_model=CVGenerateResponse)
+def api_generate_custom_cv(req: CustomCVGenerateRequest):
+    try:
+        result = cv_service.generate_cv_custom(
+            title=req.title,
+            company_name=req.company_name,
+            description=req.description,
+            template=req.template,
+        )
     except (ValueError, RuntimeError) as e:
         raise HTTPException(status_code=500, detail={
             "error_code": "GENERATION_FAILED",
@@ -126,6 +143,16 @@ def api_recompile_cv(filename: str):
         return {"pdf_path": str(pdf_path), "filename": pdf_path.name}
     except RuntimeError as e:
         raise HTTPException(status_code=500, detail={"error_code": "RECOMPILE_FAILED", "message": str(e)})
+
+
+@router.get("/preview/{stem}")
+def api_preview_cv(stem: str):
+    from app.core.config import settings
+    output_dir = settings.output_path / "cv"
+    pdf_path = output_dir / f"{stem}.pdf"
+    if not pdf_path.exists():
+        raise HTTPException(status_code=404, detail={"error_code": "PDF_NOT_FOUND", "message": f"No PDF for '{stem}'."})
+    return FileResponse(path=str(pdf_path), media_type="application/pdf", headers={"Content-Disposition": "inline"})
 
 
 @router.post("/chat/{filename}")

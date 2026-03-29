@@ -12,10 +12,7 @@ logger = logging.getLogger(__name__)
 DEFAULT_TEMPLATE_COLOR = '#000000'
 
 
-def generate_cv(
-    """
-    Orchestrates the full CV generation pipeline for a specific job.
-    """
+def generate_cv(job_id: str, template: str) -> dict:
     job = get_job_by_id(job_id)
     profile = read_personal_md()
     github = read_github_md()
@@ -38,6 +35,7 @@ def generate_cv(
         "github": profile.get("github", ""),
         "location": profile.get("location", ""),
         "portfolio": profile.get("portfolio", ""),
+        "google_scholar": profile.get("google_scholar", ""),
     }
 
     job_context = {
@@ -89,6 +87,7 @@ def generate_cv_from_file(file_path: str, template: str) -> dict:
         "github": profile.get("github", ""),
         "location": profile.get("location", ""),
         "portfolio": profile.get("portfolio", ""),
+        "google_scholar": profile.get("google_scholar", ""),
     }
 
     job_context = {
@@ -111,10 +110,53 @@ def generate_cv_from_file(file_path: str, template: str) -> dict:
     }
 
 
-def _format_profile(
-    """
-    Internal helper to transform profile data into LLM-ready text.
-    """
+def generate_cv_custom(title: str, company_name: str, description: str, template: str) -> dict:
+    profile = read_personal_md()
+    github = read_github_md()
+    profile_text = _format_profile(profile)
+
+    content = invoke_cv_chain(
+        profile=profile_text,
+        github=github,
+        company_name=company_name,
+        job_title=title,
+        job_description=description,
+    )
+
+    identity = {
+        "name": profile.get("name", ""),
+        "email": profile.get("email", ""),
+        "phone": profile.get("phone", ""),
+        "linkedin": profile.get("linkedin", ""),
+        "github": profile.get("github", ""),
+        "location": profile.get("location", ""),
+        "portfolio": profile.get("portfolio", ""),
+    }
+
+    import time
+    custom_id = f"custom{int(time.time())}"
+
+    job_context = {
+        "job_id": custom_id,
+        "target_role": title,
+        "company_name": company_name,
+        "company_website": "",
+    }
+
+    tex_path = fill_cv_template(template, identity, content, job_context)
+    pdf_path = compile_latex(tex_path)
+
+    logger.info(f"Custom CV generated: {pdf_path}")
+    return {
+        "pdf_path": str(pdf_path),
+        "job_id": custom_id,
+        "job_title": title,
+        "company_name": company_name,
+        "template_used": template,
+    }
+
+
+def _format_profile(profile: Dict[str, Any]) -> str:
     parts = []
     for key in ["name", "email", "phone", "linkedin", "github", "location", "portfolio"]:
         if profile.get(key):
@@ -127,6 +169,10 @@ def _format_profile(
         parts.append(f"\nEducation:\n{profile['education']}")
     if profile.get("achievements"):
         parts.append(f"\nAchievements:\n{profile['achievements']}")
+    if profile.get("research_projects"):
+        parts.append(f"\nResearch Projects:\n{profile['research_projects']}")
     if profile.get("certifications"):
         parts.append(f"\nCertifications:\n{profile['certifications']}")
+    if profile.get("google_scholar"):
+        parts.append(f"\nGoogle Scholar: {profile['google_scholar']}")
     return "\n".join(parts)

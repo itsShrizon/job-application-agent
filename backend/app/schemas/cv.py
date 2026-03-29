@@ -16,6 +16,13 @@ class CVGenerateRequest(BaseModel):
         return self
 
 
+class CustomCVGenerateRequest(BaseModel):
+    title: str
+    company_name: str
+    description: str
+    template: Literal["t1", "t2", "t3"]
+
+
 class CVGenerateResponse(BaseModel):
     pdf_path: str
     job_id: str

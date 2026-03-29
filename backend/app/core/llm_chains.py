@@ -24,6 +24,7 @@ Rules:
   * Bad: "Medical QA Pipeline" or "Dips Framework"
 - For [PROJECTS], provide 2-3 detailed bullet points per project. Mention specific frameworks and the technical challenge solved.
 - YOU MUST populate [ACHIEVEMENTS] using the candidate's actual achievements (e.g., Dean's List, Scholarships) found in the profile.
+- YOU MUST populate [RESEARCH] using the candidate's actual research projects found in the profile. Include publication status if available.
 
 Output format — return EXACTLY these sections with these headers. YOU MUST USE VALID LATEX FORMATTING:
 
@@ -51,6 +52,14 @@ Select the optimal number of projects to fill the single page perfectly. Format 
     \item \textbf{{\href{{URL_IF_AVAILABLE}}{{TECHNICAL_ACADEMIC_PROJECT_NAME}}}} \\
     - Built a technical solution for X using Y (e.g., PyTorch, FastAPI). \\
     - Achieved performance metric Z through algorithmic optimization W.
+\end{{itemize}}
+
+[RESEARCH]
+For each research project:
+\begin{{itemize}}
+    \item \textbf{{PROJECT_TITLE}} \\
+    - Description of the research contribution and methodology. \\
+    - Key results, metrics, and publication status (e.g., "Published in Q1 Journal").
 \end{{itemize}}
 
 [EDUCATION]
@@ -240,6 +249,7 @@ def _parse_cv_sections(raw: str) -> dict:
         "skills": sections.get("skills", ""),
         "experience": sections.get("experience", ""),
         "projects": sections.get("projects", ""),
+        "research": sections.get("research", ""),
         "education": sections.get("education", ""),
         "achievements": sections.get("achievements", ""),
         "certifications": sections.get("certifications", ""),

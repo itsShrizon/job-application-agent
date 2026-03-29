@@ -28,21 +28,27 @@ AI Engineer specializing in machine learning, NLP, and intelligent automation, w
 
 ## Experience
 
-**Jr. AI Developer — Join Venture AI** | Dhaka, Bangladesh | Jul 2025 – Present
+**AI/ML Automation Engineer — Codixel** | Hybrid | Mar 2026 – Present
+
+- Train and deploy machine learning models using Keras and TensorFlow.
+- Containerize and orchestrate ML workloads with Docker and Kubernetes.
+- Build and maintain automated CI/CD pipelines for model delivery.
+- Manage cloud infrastructure for ML systems on GCP.
+- Automate the full MLOps lifecycle from training to production.
+
+**Jr. AI Developer — Join Venture AI** | Dhaka, Bangladesh | Jul 2025 – Mar 2026
 
 - Developed ML and neural network models with TensorFlow and PyTorch; exported via ONNX for cross-platform use.
-- Fine-tuned language models using LoRA and Unsloth for financial data analysis and trend prediction.
-- Automated AI workflows and inference pipelines using n8n.
-- Created FastAPI endpoints integrated with n8n in a hybrid setup for AI automation tasks.
+- Fine-tuned large language models using LoRA for financial analysis and market-trend prediction.
+- Automated AI workflows using n8n and FastAPI for high-performance MLOps.
+- Integrated machine learning models into production with reliable, deployment-ready pipelines.
 
-**AI & ML Research Intern — Time Research and Innovation LTD** | Dhaka, Bangladesh | Jan 2025 – Jun 2025
+**AI and ML Researcher — Time Research & Innovation** | United Kingdom (Remote) | Jan 2025 – Jun 2025
 
-- Contributed to novel ML model R&D, achieving a 10% improvement in predictive accuracy for internal datasets.
-- Fine-tuned LLMs (Mistral-7B, LLAMA 3.1) using LoRA/QLoRA, PEFT, and Hugging Face.
-- Developed RAG pipelines for NLP-based question answering.
-- Built preprocessing pipelines (SentenceTransformers) for Bangla-English bilingual text.
-- Automated PDF parsing and OCR-based data extraction.
-- Maintained comprehensive documentation for experimental setups, data pipelines, and model architectures.
+- Improved ML models through R&D, boosting predictive accuracy by 10% on internal datasets.
+- Fine-tuned LLMs (Mistral-7B, LLaMA 3.1) using LoRA/QLoRA, PEFT, and Hugging Face for NLP tasks.
+- Built RAG pipelines for NLP-based question answering and information retrieval.
+- Created preprocessing pipelines with SentenceTransformers for Bangla–English bilingual text.
 
 ## Education
 
@@ -58,6 +64,18 @@ GPA: 4.58 / 5.00
 **Mouchak Scout High School**, Gazipur, Bangladesh
 Secondary School Certificate (SSC) — 2014 – 2016
 GPA: 5.00 / 5.00
+
+## Google Scholar
+
+https://scholar.google.com/citations?user=sc_DyIwAAAAJ&hl=en
+
+## Research Projects
+
+**BanglaNewsClassifier**
+Developed a high-accuracy Bangla news classification approach using hybrid models, achieving 94% accuracy with a BiLSTM-SVM stacking classifier on 118,404 articles, advancing low-resource language processing. (Published on Q1 Journal)
+
+**Advancing Legal Accessibility**
+Created a legal question-answering system combining transformer-based retrieval, rule-based filtering, and human-in-the-loop feedback. Enabled structured access to Bangladeshi legal content via LLM-based answers and legal citation mapping.
 
 ## Achievements
 
